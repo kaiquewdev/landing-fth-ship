@@ -80,8 +80,8 @@
       const urlToSearch = `https://google.com`
       termService.on('created', term => window.location.href = `${urlToSearch}?q=${term.expression}#`)
       window.addEventListener('load', () => {
-        //let qs = window.location.search.slice(1).split('&').map(v => v.split('='))
-        if (window.location.search.length) return window.location.href = `${urlToSearch}${window.location.search}`
+        let qs = window.location.search.slice(1).split('&').map(v => v.split('='))
+        if (qs.length) return termService.create({expression:qs[0][1],ua:(navigator.userAgent || 'unknown')})
         let landing = document.getElementById('landing') 
         let expression = landing.querySelector('input[name=expression]')
         expression.addEventListener('keypress', e => {
