@@ -77,8 +77,11 @@
       const socket = io('landing-fthship.herokuapp.com')
       const app = feathers().configure(feathers.hooks()).configure(feathers.socketio(socket))
       const termService = app.service('terms')
-      termService.on('created', term => window.location.href = `https://google.com?q=${term.expression}#`)
+      const urlToSearch = `https://google.com`
+      termService.on('created', term => window.location.href = `${urlToSearch}?q=${term.expression}#`)
       window.addEventListener('load', () => {
+        //let qs = window.location.search.slice(1).split('&').map(v => v.split('='))
+        if (window.location.search.length) return window.location.href = `${urlToSearch}${window.location.search}`
         let landing = document.getElementById('landing') 
         let expression = landing.querySelector('input[name=expression]')
         expression.addEventListener('keypress', e => {
